@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: SpringBootRabbitMQQuorumQueue
+  rabbitmq:
+    username: guest
+    password: guest
+    addresses: localhost:5672,localhost:5673,localhost:5674
