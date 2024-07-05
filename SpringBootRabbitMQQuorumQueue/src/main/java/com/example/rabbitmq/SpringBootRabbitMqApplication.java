@@ -55,7 +55,6 @@ public class SpringBootRabbitMqApplication {
             }
             messages.forEach(message -> {
                 RabbitMessageFuture rabbitMessageFuture = asyncRabbitTemplate.sendAndReceive(RabbitMQConfig.TOPIC_EXCHANGE_NAME, "foo.bar.baz", message);
-                System.out.println(rabbitMessageFuture.isDone());
                 rabbitMessageFuture.whenComplete((message1, e) -> {
                     if (e == null) {
                         System.out.println("client1 response received==>" + messageConverter.fromMessage(message1));
@@ -80,10 +79,8 @@ public class SpringBootRabbitMqApplication {
                 Email googler = new Email("client2@gmail.com", "info@google.com", "Hello googlers");
                 messages.add(googler);
             }
-            List<RabbitConverterFuture<Object>> resp = new ArrayList<>();
             messages.forEach(message -> {
                 RabbitConverterFuture<Object> objectRabbitConverterFuture = asyncRabbitTemplate.convertSendAndReceive(RabbitMQConfig.TOPIC_EXCHANGE_NAME, "foo.bar.baz", message);
-                resp.add(objectRabbitConverterFuture);
                 objectRabbitConverterFuture.whenComplete((m, e) -> {
                     if (e == null) {
                         System.out.println("client2 response received==>" + m);
